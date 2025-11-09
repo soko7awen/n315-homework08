@@ -1,12 +1,16 @@
 import $ from "jquery";
 
-export function changePage(pageName) {
+export async function changePage(pageName) {
   console.log(`Changing to page: ${pageName}`);
   const file = pageName === "" ? "home" : pageName;
 
   console.log(`Fetching page snippet from /pages/${file}.htm`);
-  $.get(`/pages/${file}.htm`, (data) => {
+
+  try {
+    const res = await fetch(`/pages/${file}.htm`);
+    const data = await res.text();
     console.log(data);
+
     if (data.includes('<div id="app">')) {
       alert(`"${file}.htm" is missing!`);
       console.error(`"${file}.htm" page file is missing.`);
@@ -14,8 +18,12 @@ export function changePage(pageName) {
     }
 
     $("#app").html(data);
-  });
+  } catch (error) {
+    alert(`"${file}.htm" is missing!`);
+    console.error(`"${file}.htm" page file is missing.`, error);
+  }
 }
+
 
 
 export function toggleTopnavResponsive() {
