@@ -177,6 +177,7 @@ footer .footer-socials a {
 }
 .login .forms-flex {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
   flex: 1;
