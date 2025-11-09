@@ -111,6 +111,10 @@ footer {
     text-decoration: none;
 }
 
+.home {
+    overflow: hidden;
+}
+
 .home .content {
     .page-image {
         .overlay {
@@ -122,7 +126,7 @@ footer {
 
 .text-circles-flex {
     display: flex;
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -140,7 +144,7 @@ footer {
     .circles {
         display: flex;
         position: relative;
-        top: 15px;
+        top: 220px;
         left: -40px;
 
         .large-circle {

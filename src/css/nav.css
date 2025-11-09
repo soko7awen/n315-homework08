@@ -165,9 +165,12 @@
     width: 100%;
   }
   .topnav.responsive ul li .link-button {
+    display: flex;
     padding: 0;
     background-color: transparent;
     border-radius: 0;
+    box-shadow: none;
+    font-size: inherit;
   }
   .topnav.responsive ul li a {
     width: 100%;

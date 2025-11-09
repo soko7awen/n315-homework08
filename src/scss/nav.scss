@@ -184,9 +184,12 @@
                 width: 100%;
 
                 .link-button {
+                    display: flex;
                     padding: 0;
                     background-color: transparent;
                     border-radius: 0;
+                    box-shadow: none;
+                    font-size: inherit;
                 }
 
                 a {
