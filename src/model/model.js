@@ -4,10 +4,12 @@ export function changePage(pageName) {
   console.log(`Changing to page: ${pageName}`);
   const file = pageName === "" ? "home" : pageName;
 
-  $.get(`pages/${file}.html`, (data) => {
+  console.log(`Fetching page snippet from /pages/${file}.htm`);
+  $.get(`/pages/${file}.htm`, (data) => {
+    console.log(data);
     if (data.includes('<div id="app">')) {
-      alert(`"${file}.html" is missing!`);
-      console.error(`"${file}.html" page file is missing.`);
+      alert(`"${file}.htm" is missing!`);
+      console.error(`"${file}.htm" page file is missing.`);
       return;
     }
 
@@ -18,11 +20,7 @@ export function changePage(pageName) {
 
 export function toggleTopnavResponsive() {
   const topnav = $("#myTopnav");
-  if (topnav.className === "topnav") {
-    topnav.className += " responsive";
-  } else {
-    topnav.className = "topnav";
-  }
+  topnav.toggleClass("responsive");
 }
 
 export function topnavShowLoggedIn() {
