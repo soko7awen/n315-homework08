@@ -11,7 +11,7 @@ export async function changePage(pageName) {
     const data = await res.text();
     console.log(data);
 
-    if (data.includes('<div id="app">')) {
+    if ( !res.ok || data.includes('<div id="app">')) {
       alert(`"${file}.htm" is missing!`);
       console.error(`"${file}.htm" page file is missing.`);
       return;
