@@ -1,0 +1,222 @@
+@import url("reset.css");
+@import url("nav.css");
+@font-face {
+  font-family: Caveat;
+  src: url("/fonts/Caveat/Caveat-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: Lato;
+  src: url("/fonts/Lato/Lato-Regular.ttf");
+}
+:root {
+  --fg-grey: #393939;
+  --bg-color-red: #F25C54;
+  --bg-color-yellow: #FFD972;
+  --bg-color-darkish-salmon: #EFA7A7;
+  --bg-color-lightish-salmon: #FCBCB8;
+  --bg-color-seafoam: #A7E8BD;
+}
+
+body {
+  font-family: Lato;
+  letter-spacing: 0.05em;
+}
+
+.page {
+  display: flex;
+  min-height: 100vh;
+  margin: 0 auto;
+  flex-direction: column;
+}
+
+main.content {
+  width: 100%;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+
+footer {
+  display: flex;
+  z-index: 1;
+  min-height: 44px;
+  justify-content: space-around;
+  align-items: start;
+  font-family: Lato;
+  color: var(--fg-grey);
+}
+footer span {
+  text-wrap: nowrap;
+}
+footer .footer-links {
+  display: flex;
+  gap: 32px;
+}
+footer .footer-links a {
+  color: inherit;
+  text-decoration: none;
+}
+footer .footer-socials {
+  display: flex;
+  gap: 45px;
+}
+footer .footer-socials a {
+  width: 19px;
+  height: 19px;
+}
+
+.page-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+}
+.page-image img {
+  width: 100%;
+  height: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 18px 25px;
+  background-color: var(--bg-color-yellow);
+  border: none;
+  border-radius: 35px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  text-align: center;
+  font-size: x-large;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home .content .page-image .overlay {
+  background-color: var(--bg-color-red);
+  opacity: 0.6;
+}
+
+.text-circles-flex {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.21;
+}
+.text-circles-flex h3 {
+  font-family: Caveat;
+  font-size: 24px;
+  padding-bottom: 30px;
+}
+.text-circles-flex .circles {
+  display: flex;
+  position: relative;
+  top: 15px;
+  left: -40px;
+}
+.text-circles-flex .circles .large-circle {
+  --circle-diameter: 357.6px;
+  display: flex;
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  background-color: var(--bg-color-yellow);
+  border-radius: 100%;
+  z-index: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+}
+.text-circles-flex .circles .large-circle p {
+  width: 42.5%;
+  text-align: center;
+}
+.text-circles-flex .circles .small-circle {
+  --circle-diameter: 167.9px;
+  display: flex;
+  position: relative;
+  top: -46px;
+  right: -79px;
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  margin-left: calc(-1 * var(--circle-diameter));
+  background-color: var(--bg-color-lightish-salmon);
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 9px;
+}
+.text-circles-flex .circles .small-circle p {
+  z-index: 2;
+  width: 62.5%;
+  text-align: center;
+}
+
+.login {
+  background-color: var(--bg-color-yellow);
+}
+.login .content {
+  display: flex;
+}
+.login .forms-flex {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex: 1;
+}
+.login .forms-flex h1 {
+  font-weight: normal;
+  margin-bottom: 50px;
+}
+.login .forms-flex input[type=text], .login .forms-flex input[type=password] {
+  display: block;
+  width: 233px;
+  background-color: transparent;
+  border: none;
+  box-shadow: inset 0 -2px 0 0 black;
+  margin-bottom: 45px;
+}
+.login .forms-flex input[type=text]::placeholder, .login .forms-flex input[type=password]::placeholder {
+  opacity: 1;
+}
+.login .forms-flex form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/*
+Device ranges from W3Schools:
+https://www.w3schools.com/css/css_rwd_mediaqueries.asp
+*/
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* Large devices (laptops/desktops, 1200px and down) */
+@media only screen and (max-width: 1200px) {
+  footer {
+    font-size: 10px;
+  }
+  footer .footer-links {
+    gap: 15px;
+  }
+  footer .footer-socials {
+    gap: 25px;
+  }
+}
+/* Medium devices (landscape tablets, 992px and down) */
+/* Small devices (portrait tablets and large phones, 768px and down) */
+/* Extra small devices (phones, 600px and down) */
+
+/*# sourceMappingURL=styles.css.map */
