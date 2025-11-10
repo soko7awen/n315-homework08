@@ -1,4 +1,7 @@
+import '../scss/styles.scss';
+
 import $ from "jquery";
+
 import { changePage, toggleTopnavResponsive, topnavShowLoggedIn, topnavShowSignedOut } from "../model/model.js";
 import { app, auth } from "./firebase.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";

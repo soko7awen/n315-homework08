@@ -1,4 +1,4 @@
-@import url("reset.css");
+@import url("./reset.scss");
 
 @font-face {
     font-family: Caveat;
@@ -24,7 +24,7 @@ body {
     letter-spacing: 0.05em;
 }
 
-@import url("nav.css");
+@import url("./nav.scss");
 
 
 .page {

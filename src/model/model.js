@@ -7,7 +7,7 @@ export async function changePage(pageName) {
   console.log(`Fetching page snippet from /pages/${file}.htm`);
 
   try {
-    const res = await fetch(`/pages/${file}.htm`);
+    const res = await fetch(`pages/${file}.htm`);
     const data = await res.text();
     console.log(data);
 
