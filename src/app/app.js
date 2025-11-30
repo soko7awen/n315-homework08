@@ -3,8 +3,10 @@ import '../scss/styles.scss';
 import $ from "jquery";
 
 import { changePage, toggleTopnavResponsive, topnavShowLoggedIn, topnavShowSignedOut } from "../model/model.js";
-import { app, auth } from "./firebase.js";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { app, auth, db } from "./firebase.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+
 
 function initListeners() {
   $("#app").on("click", "#myTopNavIcon", function (e) {
@@ -19,11 +21,10 @@ function initListeners() {
     const password = $("#loginPassword").val();
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert(`Welcome back, ${email}!`);
+      .then(async (cred)  => {
         console.log("signed in success");
+        alert(`Welcome back, ${cred.user.displayName}!`);
         window.location.hash = "#page-home";
-        window.location.reload();
       })
       .catch((error) => {
         alert(`Login failed: ${error.message}`);
@@ -33,21 +34,29 @@ function initListeners() {
 
   $("#app").on("submit", "#signupForm", (e) => {
     e.preventDefault();
-    
+
     const email = $("#signupEmail").val();
     const password = $("#signupPassword").val();
+    const firstName = $("#signupFirstName").val();
+    const lastName = $("#signupLastName").val();
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        console.log("signed up success");
+      .then(async (cred) => {
+        await updateProfile(cred.user, { displayName: firstName });
+        console.log(cred.user.displayName);
+        alert(`Thanks for signing up, ${cred.user.displayName}!`);
+        await setDoc(doc(db, "users", cred.user.uid), {
+          firstName,
+          lastName,
+          email
+        });
         window.location.hash = "#page-home";
-        window.location.reload();
       })
       .catch((error) => {
         console.log("error signing up: ", error);
       });
   });
-
+  
   $("#app").on("click", "#loginNavBtn", () => {
     if (auth.currentUser) {
       console.log("loginNavBtn used to sign out");
@@ -63,10 +72,13 @@ function initListeners() {
 }
 
 function route() {
-  let hashTag = window.location.hash;
-  let pageID = hashTag.replace("#page-", "");
-  changePage(pageID);
+  setTimeout(() => {
+    let hashTag = window.location.hash;
+    let pageID = hashTag.replace("#page-", "");
+    changePage(pageID);
+  }, 80);
 }
+
 
 function initRouting() {
   $(window).on("hashchange", route);

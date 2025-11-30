@@ -1,12 +1,12 @@
 {
-  "name": "n315-homework07",
+  "name": "n315-homework08",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:web4": "vite build --base=/~hhamelin/Y4/FA25/N315/homework07/",
+    "build:web4": "vite build --base=/~hhamelin/Y4/FA25/N315/homework08/",
     "preview": "vite preview"
   },
   "devDependencies": {

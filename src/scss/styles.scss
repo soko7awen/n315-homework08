@@ -10,6 +10,11 @@
     src: url("/fonts/Lato/Lato-Regular.ttf");
 }
 
+@font-face {
+    font-family: 'Lato Black';
+    src: url("/fonts/Lato/Lato-Black.ttf");
+}
+
 :root {
     --fg-grey: #393939;
     --bg-color-red: #F25C54;
@@ -24,6 +29,15 @@ body {
     letter-spacing: 0.05em;
 }
 
+h1 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.handwritten {
+    font-family: Caveat;
+}
+
 @import url("./nav.scss");
 
 
@@ -35,8 +49,9 @@ body {
 }
 
 main.content {
-    width: 100%;
+    width: 77%;
     margin: 0 auto;
+    margin-top: 80px;
     flex-grow: 1;
 }
 
@@ -115,13 +130,14 @@ footer {
     overflow: hidden;
 }
 
-.home .content {
-    .page-image {
-        .overlay {
-            background-color: var(--bg-color-red);
-            opacity: .6;
-        }
-    }
+.overlay.ov-red {
+    background-color: var(--bg-color-red);
+    opacity: .6;
+}
+
+.overlay.ov-seafoam {
+    background-color: var(--bg-color-seafoam);
+    opacity: .6;
 }
 
 .text-circles-flex {
@@ -187,6 +203,64 @@ footer {
                 text-align: center;
             }
         }
+    }
+}
+
+.food-flex {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.food-card {
+    display: flex;
+    height: 263px;
+
+    .card-image {
+        border-radius: 24px;
+    }
+
+    .card-text {
+        display: flex;
+        width: 224px;
+        background-color: white;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 24px;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .card-title {
+        margin-bottom: 10px;
+        font-family: 'Lato Black';
+        font-size: 15px;
+        text-decoration: underline 4px;
+        text-align: center;
+    }
+
+    .card-description {
+        width: 140px;
+        font-size: 9px;
+        line-height: 1.2em;
+    }
+
+    .card-info-row {
+        display: flex;
+        width: 100px;
+        align-items: center;
+        gap: 20px;
+
+    }
+
+    .info-icon {
+        height: 25px;
+    }
+
+    .info-text {
+        font-size: 10px;
     }
 }
 
