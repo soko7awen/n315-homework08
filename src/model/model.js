@@ -41,17 +41,31 @@ export async function fetchRecipes() {
   recipesContainer.empty();
 
   const recipesCol = collection(db, "recipes");
-
-  const allRecipesQuery = query(recipesCol);
-  const snapshot = await getDocs(allRecipesQuery);
+  const snapshot = await getDocs(recipesCol);
 
   if (snapshot.empty) {
     recipesContainer.append("<p>No recipes found.</p>");
     return;
   }
 
-  snapshot.forEach(doc => {
-    const recipe = doc.data();
+  const recipes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+  recipes.sort((a, b) => {
+    const timeA = a.editTime ? new Date(a.editTime).getTime() : 0;
+    const timeB = b.editTime ? new Date(b.editTime).getTime() : 0;
+
+    if (timeA !== timeB) {
+      return timeB - timeA;
+    }
+
+    const titleA = a.title ? a.title.toLowerCase() : "";
+    const titleB = b.title ? b.title.toLowerCase() : "";
+    if (titleA < titleB) return 1;
+    if (titleA > titleB) return -1;
+    return 0;
+  });
+
+  recipes.forEach(recipe => {
     const recipeHtml = `
       <div class="food-card">
         <img class="card-image" src="../img/recipes/${recipe.imageUrl}" alt="">
@@ -74,6 +88,7 @@ export async function fetchRecipes() {
     recipesContainer.append(recipeHtml);
   });
 }
+
 
 export function topnavShowPage(pageName) {
   $("#myTopnav a").removeClass("active");
