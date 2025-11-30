@@ -2,7 +2,7 @@ import '../scss/styles.scss';
 
 import $ from "jquery";
 
-import { changePage, toggleTopnavResponsive, topnavShowLoggedIn, topnavShowSignedOut } from "../model/model.js";
+import { changePage, topnavShowPage, toggleTopnavResponsive, topnavShowLoggedIn, topnavShowSignedOut } from "../model/model.js";
 import { app, auth, db } from "./firebase.js";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
@@ -75,10 +75,11 @@ function route() {
   setTimeout(() => {
     let hashTag = window.location.hash;
     let pageID = hashTag.replace("#page-", "");
-    changePage(pageID);
+    changePage(pageID).then(() => {
+      topnavShowPage(pageID);
+    });
   }, 80);
 }
-
 
 function initRouting() {
   $(window).on("hashchange", route);

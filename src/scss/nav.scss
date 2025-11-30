@@ -7,18 +7,24 @@
 }
 
 .topnav {
-    display: flex;
+    display: block;
     z-index: 100;
     width: 100%;
     height: var(--nav-height);
     background-color: transparent;
     padding: 0 50px 15px 50px;
-    justify-content: space-between;
-    align-items: end;
-    gap: 115px;
     font-size: 28px;
     font-family: Caveat;
     color: #000000;
+}
+
+.topnav nav {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: end;
+    gap: 115px;
 
     .link-button {
         display: inline-block;
@@ -135,7 +141,7 @@
 }
 
 @media screen and (max-width: 1200px) {
-    .topnav {
+    .topnav nav {
         ul {
             justify-content: space-between;
             align-items: center;
@@ -169,7 +175,7 @@
         }
     }
 
-    .topnav.responsive {
+    .topnav.responsive nav {
         ul {
             position: absolute;
             top: calc( ( var(--nav-height) - var(--nav-height) ) / 2);
