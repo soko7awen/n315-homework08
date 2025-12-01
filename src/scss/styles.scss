@@ -71,6 +71,7 @@ footer {
     align-items: start;
     font-family: Lato;
     color: var(--fg-grey);
+    flex-wrap: wrap;
 
     span {
         text-wrap: nowrap;
@@ -78,6 +79,7 @@ footer {
 
     .footer-links {
         display: flex;
+        flex-wrap: wrap;
         gap: 32px;
 
         a {
