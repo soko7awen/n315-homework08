@@ -71,14 +71,20 @@ function initListeners() {
   });
 }
 
+function getHashParams() {
+    const hash = window.location.hash.split('?')[1];
+    if (!hash) return {};
+    return Object.fromEntries(new URLSearchParams(hash));
+}
+
 function route() {
-  setTimeout(() => {
-    let hashTag = window.location.hash;
-    let pageID = hashTag.replace("#page-", "");
-    changePage(pageID).then(() => {
-      topnavShowPage(pageID);
+    const hashTag = window.location.hash;
+    const [pageID, queryString] = hashTag.replace("#page-", "").split("?");
+    const params = getHashParams();
+
+    changePage(pageID, params).then(() => {
+        topnavShowPage(pageID);
     });
-  }, 80);
 }
 
 function initRouting() {

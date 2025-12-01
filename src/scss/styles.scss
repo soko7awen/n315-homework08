@@ -34,6 +34,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+.hidden {
+    display: none;
+}
+
 .handwritten {
     font-family: Caveat;
 }
@@ -93,8 +97,8 @@ footer {
     }
 }
 
-.page-image {
-    position: absolute;
+.full-image {
+    position: fixed;
     top: 0;
     left: 0;
     z-index: -1;
@@ -116,7 +120,7 @@ footer {
   height: 100%;
 }
 
-.link-button {
+.fancy-button {
     display: inline-block;
     padding: 18px 25px;
     background-color: var(--bg-color-yellow);
@@ -214,25 +218,62 @@ footer {
     display: flex;
     width: 100%;
     margin-top: 30px;
+    margin-bottom: 50px;
     flex-wrap: wrap;
     gap: 50px;
 }
 
 .food-card {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
     max-width: 524px;
     height: auto;
 
-    .card-image {
-        aspect-ratio: 300/263;
+    .fancy-button {
+        width: 150px;
+        padding-top: 9px;
+        padding-bottom: 9px;
+        font-family: Caveat;
+        font-size: 20px;
+    }
+
+    .card-flex {
+        display: flex;
+        flex-wrap: wrap;
         width: 100%;
-        height: auto;
+    }
+
+    .image-wrap {
+        position: relative;
+        flex: 1 1 300px;
+        width: 100%;
         max-width: 300px;
+        aspect-ratio: 300/263;
+    }
+
+    .card-image {
+        display: block;
+        width: 100%;
+        height: 100%;
         border-radius: 24px;
         object-fit: cover;
-        flex: 1 1 300px;
+    }
+
+    .view-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    &:hover .view-btn {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .card-text {
@@ -280,9 +321,19 @@ footer {
         font-size: 0.8rem;
     }
 
+    .card-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
     @media (max-width: 600px) {
-        flex-direction: column;
-        align-items: center;
+        .card-flex {
+            flex-direction: column;
+            align-items: center;
+        }
 
         .card-text {
             width: 90%;
@@ -295,8 +346,77 @@ footer {
         .card-info-row {
             gap: 8px;
         }
+
+        .card-buttons {
+            justify-content: center;
+        }
     }
 }
+
+.view-recipe {
+    margin-bottom: 50px;
+    font-size: 20px;
+    font-family: Caveat;
+
+
+    h2 {
+        font-size: 25px;
+        font-family: 'Lato Black', sans-serif;
+        letter-spacing: 0.2em;
+    }
+}
+
+.recipe-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.recipe-title-vertical-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 421px;
+    flex-shrink: 0;
+}
+
+.recipe-title-vertical {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.recipe-image-wrap {
+    flex-shrink: 0;
+}
+
+.recipe-image-wrap img {
+    width: 468px;
+    height: 421px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.recipe-details {
+    display: flex;
+    max-width: 464px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+}
+
+.ingredients-section,
+.instructions-section {
+    margin-top: 40px;
+}
+
+.ingredients-section ul,
+.instructions-section ol {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
 
 #app:has(.login) {
     background-color: var(--bg-color-yellow);
@@ -339,6 +459,106 @@ footer {
         }
     }
 }
+
+.create-recipe, .edit-recipe {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    form {
+        width: 90%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+        margin-bottom: 50px;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px 4px;
+        border: none;
+        border-bottom: 3px solid black;
+        border-radius: 0;
+        font-size: 14px;
+        background: transparent;
+    }
+
+    .form-row {
+        display: flex;
+        border-bottom: 3px solid black;
+        align-items: flex-end;
+        gap: 10px;
+
+        input {
+            flex: 1;
+            border-bottom: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background-color: var(--bg-color-darkish-salmon);
+            color: black;
+            padding: 8px 12px;
+            margin-bottom: 4px;
+            font-size: 17px;
+            border-radius: 50px;
+            height: 38px;
+        }
+    }
+
+    .section-separator {
+        height: 12px;
+    }
+
+    .ingredients-section,
+    .instructions-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .circle-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background-color: var(--bg-color-darkish-salmon);
+            color: white;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-self: center;
+        }
+    }
+
+    .submit-button {
+        cursor: pointer;
+        width: 100%;
+        max-width: 422px;
+        margin: 0 auto;
+        margin-top: 20px;
+        padding: 10px 0;
+        background-color: var(--bg-color-darkish-salmon);
+        font-size: 24px;
+        color: black;
+        border: none;
+        border-radius: 50px;
+    }
+}
+
 
 /*
 Device ranges from W3Schools:

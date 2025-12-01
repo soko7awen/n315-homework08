@@ -1,0 +1,51 @@
+<div class="content edit-recipe">
+    <h1>Hey <span id="creatorName"></span>, edit your recipe!</h1>
+
+    <form id="editRecipeForm">
+
+        <div class="form-row">
+            <input type="text" id="recipeImageInput" placeholder="Add Recipe Image" readonly>
+            <button type="button" id="attachImageBtn" class="fancy-button handwritten">Attach File</button>
+            <input type="file" id="recipeFileInput" accept="image/*" style="display:none">
+        </div>
+
+        <input type="text" id="recipeName" placeholder="Recipe Name">
+        <input type="text" id="recipeDescription" placeholder="Recipe Description">
+        <input type="text" id="recipeTime" placeholder="Recipe Total Time">
+        <input type="text" id="recipeServings" placeholder="Recipe Serving Size">
+
+        <div class="section-separator"></div>
+
+        <div class="ingredients-section">
+            <span>Enter Ingredients:</span>
+            <div class="form-row">
+                <input type="text" class="ingredient-input" placeholder="Ingredient #1">
+            </div>
+            <div class="form-row">
+                <input type="text" class="ingredient-input" placeholder="Ingredient #2">
+            </div>
+            <div class="form-row">
+                <input type="text" class="ingredient-input" placeholder="Ingredient #3">
+                <button type="button" id="addIngredientBtn" class="circle-btn">+</button>
+            </div>
+        </div>
+
+        <div class="section-separator"></div>
+
+        <div class="instructions-section">
+            <span>Enter Instructions:</span>
+            <div class="form-row">
+                <input type="text" class="instruction-input" placeholder="Instruction #1">
+            </div>
+            <div class="form-row">
+                <input type="text" class="instruction-input" placeholder="Instruction #2">
+            </div>
+            <div class="form-row">
+                <input type="text" class="instruction-input" placeholder="Instruction #3">
+                <button type="button" id="addInstructionBtn" class="circle-btn">+</button>
+            </div>
+        </div>
+
+        <button type="submit" id="updateRecipeBtn" class="submit-button handwritten">Update Recipe</button>
+    </form>
+</div>

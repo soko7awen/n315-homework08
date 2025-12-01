@@ -1,12 +1,8 @@
 import $ from "jquery";
 
-import { db, auth } from "../app/firebase.js";
-import { collection, getDocs, query, where } from "firebase/firestore";
-
-
-export async function changePage(pageName) {
-  console.log(`Changing to page: ${pageName}`);
-  const file = pageName === "" ? "home" : pageName;
+export async function changePage(pageId, params) {
+  console.log(`Changing to page: ${pageId}`);
+  const file = pageId === "" ? "home" : pageId;
 
   console.log(`Fetching page snippet from /pages/${file}.htm`);
 
@@ -24,11 +20,37 @@ export async function changePage(pageName) {
 
     $("#place-content").html(data);
 
-    if (file === "browse") {
-      import("./model.js").then(module => {
-        module.fetchRecipes();
+  switch (file) {
+    case "browse":
+      import("../app/browse.js").then(module => {
+        module.initBrowsePage();
       });
-    }
+      break;
+
+    case "create-recipe":
+      import("../app/createRecipe.js").then(module => {
+        module.initCreateRecipePage();
+      });
+      break;
+
+    case "your-recipes":
+      import("../app/yourRecipes.js").then(module => {
+        module.initYourRecipesPage();
+      });
+      break;
+
+    case "edit-recipe":
+      import("../app/editRecipe.js").then(module => {
+        module.initEditRecipePage(params);
+      });
+      break;
+
+    case "view-recipe":
+      import("../app/viewRecipe.js").then(module => {
+        module.initViewRecipePage(params);
+      });
+      break;
+  }
   } catch (error) {
     $("#place-content").empty();
     alert(`"${file}.htm" is missing!`);
@@ -36,71 +58,16 @@ export async function changePage(pageName) {
   }
 }
 
-export async function fetchRecipes() {
-  const recipesContainer = $(".food-flex");
-  recipesContainer.empty();
-
-  const recipesCol = collection(db, "recipes");
-  const snapshot = await getDocs(recipesCol);
-
-  if (snapshot.empty) {
-    recipesContainer.append("<p>No recipes found.</p>");
-    return;
-  }
-
-  const recipes = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-  recipes.sort((a, b) => {
-    const timeA = a.editTime ? new Date(a.editTime).getTime() : 0;
-    const timeB = b.editTime ? new Date(b.editTime).getTime() : 0;
-
-    if (timeA !== timeB) {
-      return timeB - timeA;
-    }
-
-    const titleA = a.title ? a.title.toLowerCase() : "";
-    const titleB = b.title ? b.title.toLowerCase() : "";
-    if (titleA < titleB) return 1;
-    if (titleA > titleB) return -1;
-    return 0;
-  });
-
-  recipes.forEach(recipe => {
-    const recipeHtml = `
-      <div class="food-card">
-        <img class="card-image" src="../img/recipes/${recipe.imageUrl}" alt="">
-        <div class="card-text">
-          <div>
-            <h3 class="card-title">${recipe.title}</h3>
-            <p class="card-description">${recipe.description}</p>
-          </div>
-          <div class="card-info-row">
-            <img class="info-icon" src="../img/clock-icon.png" alt="">
-            <span class="info-text">${recipe.time}</span>
-          </div>
-          <div class="card-info-row">
-            <img class="info-icon" src="../img/servings-icon.png" alt="">
-            <span class="info-text">${recipe.servings}</span>
-          </div>
-        </div>
-      </div>
-    `;
-    recipesContainer.append(recipeHtml);
-  });
-}
-
-
-export function topnavShowPage(pageName) {
+export function topnavShowPage(pageId) {
   $("#myTopnav a").removeClass("active");
 
-  const file = pageName === "" ? "home" : pageName;
-  const navBtnId = {
-    home: "#homeNavBtn",
-    browse: "#browseNavBtn",
-    "create-recipe": "#createRecipeNavBtn",
-  }[file];
+  const file = pageId === "" ? "home" : pageId;
 
-  if (navBtnId) {
+  let camelCaseId = file.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  camelCaseId = (camelCaseId === "editRecipe" || camelCaseId === "viewRecipe") ? "yourRecipes" : camelCaseId;
+  const navBtnId = `#${camelCaseId}NavBtn`;
+
+  if ($(navBtnId).length) {
     $(navBtnId).addClass("active");
   }
 }
@@ -111,11 +78,13 @@ export function toggleTopnavResponsive() {
 }
 
 export function topnavShowLoggedIn() {
-  $("#loginNavBtn").text("Sign Out");
-  $("#loginNavBtn").attr("href", "javascript:void(0)")
+  $("#loginNavBtn").text("Logout");
+  $("#loginNavBtn").attr("href", "javascript:void(0)");
+  $("#yourRecipesNavBtn").parent().removeClass("hidden");
 }
 
 export function topnavShowSignedOut() {
   $("#loginNavBtn").text("Log In");
-  $("#loginNavBtn").attr("href", "#page-login")
+  $("#loginNavBtn").attr("href", "#page-login");
+  $("#yourRecipesNavBtn").parent().addClass("hidden");
 }
