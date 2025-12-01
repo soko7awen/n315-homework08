@@ -3,21 +3,23 @@ import { auth, db } from "./firebase.js";
 import { doc, getDoc, updateDoc, serverTimestamp } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-function waitForUser() {
-    return new Promise(resolve => {
-        if (auth.currentUser) return resolve(auth.currentUser);
-        const unsubscribe = onAuthStateChanged(auth, user => {
-            if (user) {
-                unsubscribe();
-                resolve(user);
-            }
-        });
-    });
-}
-
 export async function initEditRecipePage(params) {
     const recipeId = params.id;
-    const user = await waitForUser();
+
+    const user = await new Promise(resolve => {
+        if (auth.currentUser) return resolve(auth.currentUser);
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            unsubscribe();
+            resolve(user);
+        });
+    });
+
+    if (!user) {
+        alert("You must be logged in to edit a recipe.");
+        window.location.hash = "#page-login";
+        return;
+    }
+
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);
     if (snap.exists()) $("#creatorName").text(snap.data().firstName);
@@ -120,5 +122,3 @@ export async function initEditRecipePage(params) {
         window.location.hash = "#page-your-recipes";
     });
 }
-
-

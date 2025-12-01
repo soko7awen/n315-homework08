@@ -3,20 +3,20 @@ import { auth, db } from "./firebase.js";
 import { doc, getDoc, collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 
-function waitForUser() {
-    return new Promise(resolve => {
+export async function initCreateRecipePage() {
+    const user = await new Promise(resolve => {
         if (auth.currentUser) return resolve(auth.currentUser);
         const unsubscribe = onAuthStateChanged(auth, user => {
-            if (user) {
-                unsubscribe();
-                resolve(user);
-            }
+            unsubscribe();
+            resolve(user);
         });
     });
-}
 
-export async function initCreateRecipePage() {
-    const user = await waitForUser();
+    if (!user) {
+        alert("You must be logged in to create a recipe.");
+        window.location.hash = "#page-login";
+        return;
+    }
 
     const userRef = doc(db, "users", user.uid);
     const snap = await getDoc(userRef);

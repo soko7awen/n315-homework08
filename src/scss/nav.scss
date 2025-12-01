@@ -98,7 +98,6 @@
 
     ul {
         display: flex;
-        min-width: 550px;
         list-style-type: none;
         padding: 0;
         gap: 15px;
@@ -193,7 +192,7 @@
                 display: initial;
                 width: 100%;
 
-                .link-button {
+                .fancy-button {
                     display: flex;
                     padding: 0;
                     background-color: transparent;
@@ -230,5 +229,16 @@
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .topnav nav ul a.icon {
+        top: 25px;
+        right: 20px;
+    }
+
+    .topnav.responsive nav ul li:first-of-type a {
+        height: 100px;
     }
 }
