@@ -43,7 +43,7 @@ export async function initBrowsePage() {
     });
 
     recipes.forEach(recipe => {
-        const src = recipe.imageBase64 || `../img/recipes/${recipe.imageUrl}`;
+        const src = recipe.imageBase64 || `/img/recipes/${recipe.imageUrl}`;
         const recipeHtml = `
             <div class="food-card">
                 <div class="card-flex">
@@ -57,11 +57,11 @@ export async function initBrowsePage() {
                             <p class="card-description">${recipe.description}</p>
                         </div>
                         <div class="card-info-row">
-                            <img class="info-icon" src="../img/clock-icon.png" alt="">
+                            <img class="info-icon" src="/img/clock-icon.png" alt="">
                             <span class="info-text">${recipe.time}</span>
                         </div>
                         <div class="card-info-row">
-                            <img class="info-icon" src="../img/servings-icon.png" alt="">
+                            <img class="info-icon" src="/img/servings-icon.png" alt="">
                             <span class="info-text">${recipe.servings}</span>
                         </div>
                     </div>
